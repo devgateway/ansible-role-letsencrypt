@@ -33,3 +33,11 @@
     value: "true"
     state: "{{ le_staging_mode | ternary('present', 'absent') }}"
   run_once: true
+
+- name: Configure Letsencrypt log rotation
+  include_role:
+    name: devgateway.logrotate
+  vars:
+    lgrt_name: letsencrypt
+    lgrt_path: "{{ le_log_file }}"
+    lgrt_config: {}
