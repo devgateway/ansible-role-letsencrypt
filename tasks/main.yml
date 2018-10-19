@@ -24,3 +24,12 @@
     value: "{{ le_deploy_hook }}"
   run_once: true
   when: le_deploy_hook is defined
+
+- name: Set Letsencrypt staging/prod mode
+  ini_file:
+    path: "{{ le_config_dir }}/cli.ini"
+    section: null
+    option: "staging"
+    value: "true"
+    state: "{{ le_staging_mode | ternary('present', 'absent') }}"
+  run_once: true

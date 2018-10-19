@@ -7,3 +7,4 @@ le_packages:
     certbot: certbot
     route53: python3-certbot-dns-route53
 le_config_dir: /etc/letsencrypt
+le_staging_mode: false
