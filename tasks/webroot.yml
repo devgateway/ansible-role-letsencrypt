@@ -1,0 +1,5 @@
+---
+- name: Create webroot directory
+  file:
+    path: "{{ le_plugin_settings.webroot.directory }}"
+    state: directory

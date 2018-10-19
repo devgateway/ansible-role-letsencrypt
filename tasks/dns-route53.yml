@@ -1,0 +1,12 @@
+---
+- name: Enable Route53 module for Letsencrypt
+  ini_file:
+    path: "{{ le_config_dir }}/cli.ini"
+    section: null
+    option: dns-route53
+    value: "true"
+  run_once: true
+
+- name: Install Route53 module
+  package:
+    name: "{{ le_packages[ansible_os_family].route53 }}"

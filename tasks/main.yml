@@ -42,6 +42,9 @@
     lgrt_path: "{{ le_log_file }}"
     lgrt_config: {}
 
+- name: Include plugin tasks
+  include_tasks: "{{ le_plugin }}.yml"
+
 - name: Initialize Letsencrypt certificate
   environment:
     AWS_CONFIG_FILE: "{{ le_config_dir }}/aws.ini"
