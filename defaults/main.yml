@@ -13,5 +13,6 @@ le_log_file: /var/log/letsencrypt/letsencrypt.log
 le_staging_mode: false
 le_plugin: webroot
 le_systemd_dir: /etc/systemd/system
+le_enable_timer: true
 le_service_requires: []
 le_certbot_environment: {}

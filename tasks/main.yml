@@ -76,3 +76,10 @@
 - name: Reload Systemd daemon
   command: systemctl daemon-reload
   when: le_unit_status.changed
+
+- name: Enable and start Letsencrypt timer
+  service:
+    name: "{{ le_unit_name }}.timer"
+    enabled: true
+    state: started
+  when: le_enable_timer
