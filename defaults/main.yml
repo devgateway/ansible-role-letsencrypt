@@ -1,1 +1,4 @@
 ---
+le_packages:
+  RedHat: &certbot_package certbot
+  Debian: *certbot_package
