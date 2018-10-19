@@ -41,3 +41,22 @@
     lgrt_name: letsencrypt
     lgrt_path: "{{ le_log_file }}"
     lgrt_config: {}
+
+- name: Initialize Letsencrypt certificate
+  environment:
+    AWS_CONFIG_FILE: "{{ le_config_dir }}/aws.ini"
+  command: >-
+    certbot certonly
+    --noninteractive
+    --agree-tos
+    --{{ le_plugin }}
+    {% if le_staging_mode %}
+    --staging
+    {% endif %}
+    --domains {{ le_domains | join(',') | quote }}
+  args:
+    creates: "{{ le_config_dir }}/live/{{ each_domain }}/fullchain.pem"
+  loop: "{{ le_domains }}"
+  loop_control:
+    loop_var: each_domain
+  run_once: true

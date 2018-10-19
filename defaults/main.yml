@@ -9,3 +9,4 @@ le_packages:
 le_config_dir: /etc/letsencrypt
 le_log_file: /var/log/letsencrypt/letsencrypt.log
 le_staging_mode: false
+le_plugin: webroot
