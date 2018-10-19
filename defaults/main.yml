@@ -1,4 +1,9 @@
 ---
 le_packages:
-  RedHat: &certbot_package certbot
-  Debian: *certbot_package
+  RedHat:
+    certbot: certbot
+    route53: python2-certbot-dns-route53
+  Debian:
+    certbot: certbot
+    route53: python3-certbot-dns-route53
+le_config_dir: /etc/letsencrypt

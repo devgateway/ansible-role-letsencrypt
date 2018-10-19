@@ -1,4 +1,17 @@
 ---
 - name: Install packages
   package:
-    name: "{{ le_packages[ansible_os_family] }}"
+    name: "{{ le_packages[ansible_os_family].certbot }}"
+
+- name: Configure Letsencrypt CLI
+  ini_file:
+    path: "{{ le_config_dir }}/cli.ini"
+    section: null
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_dict:
+    noninteractive: "true"
+    max-log-backups: 0
+    email: "{{ le_email }}"
+    agree-tos: "true"
+  run_once: true
