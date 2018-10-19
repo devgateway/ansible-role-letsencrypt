@@ -15,3 +15,12 @@
     email: "{{ le_email }}"
     agree-tos: "true"
   run_once: true
+
+- name: Configure Letsencrypt deploy hook
+  ini_file:
+    path: "{{ le_config_dir }}/cli.ini"
+    section: null
+    option: deploy-hook
+    value: "{{ le_deploy_hook }}"
+  run_once: true
+  when: le_deploy_hook is defined
