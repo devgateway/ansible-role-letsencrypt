@@ -1,0 +1,13 @@
+[Unit]
+Description=Update Letsencrypt certificates
+Requires={{ (le_service_requires + ['network-online.target']) | join(' ') }}
+
+[Service]
+Type=oneshot
+{%  if le_certbot_environment %}
+{{    'Environment=' }}
+{%-   for var_name, var_value in le_certbot_environment.iteritems() -%}
+{{      '{}={}'.format(var_name, var_value) | quote }}{{ loop.last | ternary('\n', ' ') }}
+{%-   endfor %}
+{%- endif %}
+ExecStart=/usr/bin/certbot renew

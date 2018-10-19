@@ -60,3 +60,19 @@
   loop_control:
     loop_var: each_domain
   run_once: true
+
+- name: Install Systemd units
+  template:
+    src: "{{ unit_type }}.j2"
+    dest: "{{ le_systemd_dir }}/{{ le_unit_name }}.{{ unit_type }}"
+    mode: 0644
+  loop:
+    - service
+    - timer
+  loop_control:
+    loop_var: unit_type
+  register: le_unit_status
+
+- name: Reload Systemd daemon
+  command: systemctl daemon-reload
+  when: le_unit_status.changed
