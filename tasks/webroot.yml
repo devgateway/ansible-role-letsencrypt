@@ -3,3 +3,21 @@
   file:
     path: "{{ le_plugin_settings.webroot.directory }}"
     state: directory
+
+- name: Initialize Letsencrypt certificate
+  command: >-
+    certbot certonly
+    --noninteractive
+    --agree-tos
+    {% if le_staging_mode %}
+    --staging
+    {% endif %}
+    --{{ le_plugin }}
+    --webroot-path {{ le_plugin_settings.webroot.directory | quote }}
+    --domains {{ le_domains | join(',') | quote }}
+  args:
+    creates: "{{ le_config_dir }}/live/{{ each_domain }}/fullchain.pem"
+  loop: "{{ le_domains }}"
+  loop_control:
+    loop_var: each_domain
+  run_once: true

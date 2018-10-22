@@ -10,3 +10,22 @@
     option: dns-route53
     value: "true"
   run_once: true
+
+- name: Initialize Letsencrypt certificate
+  environment:
+    AWS_CONFIG_FILE: "{{ le_config_dir }}/aws.ini"
+  command: >-
+    certbot certonly
+    --noninteractive
+    --agree-tos
+    {% if le_staging_mode %}
+    --staging
+    {% endif %}
+    --{{ le_plugin }}
+    --domains {{ le_domains | join(',') | quote }}
+  args:
+    creates: "{{ le_config_dir }}/live/{{ each_domain }}/fullchain.pem"
+  loop: "{{ le_domains }}"
+  loop_control:
+    loop_var: each_domain
+  run_once: true
