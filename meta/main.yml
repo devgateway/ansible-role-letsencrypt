@@ -1,6 +1,8 @@
 galaxy_info:
   author: Development Gateway
-  description: Configure Letsencrypt
+  description: >
+    Install and configure Letsencrypt, obtain certificates, and set up renewal using Systemd.
+    This role requires EPEL on RedHat OSes.
   company: Development Gateway
   license: GPLv3
   min_ansible_version: 2.7 # bug in nested include_role

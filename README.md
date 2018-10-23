@@ -1,6 +1,7 @@
 # devgateway.letsencrypt
 
-Configure Letsencrypt.
+Install and configure Letsencrypt, obtain certificates, and set up renewal using Systemd. This role
+requires EPEL on RedHat OSes.
 
 ## Required Variables
 
@@ -29,7 +30,7 @@ Default: ``` /etc/letsencrypt ```
 
 ### `le_enable_timer`
 
-Whether the renewal timer should be permanently activated and started now.
+Whether the renewal timer should be activated permanently and started immediately.
 
 Default: *true*
 
@@ -45,54 +46,58 @@ A structure describing required packages for Certbot and its plugins by OS famil
 
 Default:
 
-* **RedHat**: {'certbot': 'certbot', 'route53': 'python2-certbot-dns-route53'}
-* **Debian**: {'certbot': 'certbot', 'route53': 'python3-certbot-dns-route53'}
+    RedHat:
+      certbot: certbot
+      dns-route53: python2-certbot-dns-route53
+    Debian:
+      certbot: certbot
+      dns-route53: python3-certbot-dns-route53
 
 
 ### `le_plugin`
 
-Variable description.
+Certbot plugin to obtain certificates with.
 
 Default: ``` webroot ```
 
 ### `le_plugin_settings`
 
-Variable description.
+A dictionary of configurations for each plugin.
 
 Default:
 
-* **webroot**: {'directory': '/etc/letsencrypt/public_html'}
+    webroot:
+      directory: /etc/letsencrypt/public_html
 
 
 ### `le_service_requires`
 
-Variable description.
+Array of Systemd unit names that Letsencrypt service should also `Require`. It always additionally
+requires `network-online.target`.
 
-Default:
-
-
+Default: `[]`
 
 ### `le_staging_mode`
 
-Variable description.
+Obtain a staging (invalid) version of the certificates.
 
-Default: *False*
+Default: *false*
 
 ### `le_systemd_dir`
 
-Variable description.
+The directory for Systemd custom units.
 
 Default: ``` /etc/systemd/system ```
 
 ### `le_unit_name`
 
-Variable description.
+The name for service and timer units of Letsencrypt.
 
 Default: ``` update-letsencrypt ```
 
 ### `le_update_interval`
 
-Variable description.
+The interval for update timer, see `systemd.timer(5)` for syntax.
 
 Default: ``` daily ```
 
