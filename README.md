@@ -23,25 +23,25 @@ Default: ``` {} ```
 
 ### `le_config_dir`
 
-Variable description.
+The directory where Letsencrypt stores configs and keys.
 
 Default: ``` /etc/letsencrypt ```
 
 ### `le_enable_timer`
 
-Variable description.
+Whether the renewal timer should be permanently activated and started now.
 
-Default: *True*
+Default: *true*
 
 ### `le_log_file`
 
-Variable description.
+Path to Letsencrypt log file.
 
 Default: ``` /var/log/letsencrypt/letsencrypt.log ```
 
 ### `le_packages`
 
-Variable description.
+A structure describing required packages for Certbot and its plugins by OS family.
 
 Default:
 
