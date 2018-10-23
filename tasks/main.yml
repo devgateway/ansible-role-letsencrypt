@@ -1,5 +1,5 @@
 ---
-- name: Install packages
+- name: Install Certbot
   package:
     name: "{{ le_packages[ansible_os_family].certbot }}"
 

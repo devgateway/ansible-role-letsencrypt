@@ -2,10 +2,10 @@
 le_packages:
   RedHat:
     certbot: certbot
-    route53: python2-certbot-dns-route53
+    dns-route53: python2-certbot-dns-route53
   Debian:
     certbot: certbot
-    route53: python3-certbot-dns-route53
+    dns-route53: python3-certbot-dns-route53
 le_config_dir: /etc/letsencrypt
 le_unit_name: update-letsencrypt
 le_update_interval: daily
