@@ -24,8 +24,9 @@
     --{{ le_plugin }}
     --domains {{ le_domains | join(',') | quote }}
   args:
-    creates: "{{ le_config_dir }}/live/{{ each_domain }}/fullchain.pem"
-  loop: "{{ le_domains }}"
-  loop_control:
-    loop_var: each_domain
+    creates: >-
+      {{ '%(path)s/live/%(domain)s/fullchain.pem' | format(
+      path = le_config_dir,
+      domain = le_domains | first | replace('*.', '')
+      ) }}
   run_once: true
