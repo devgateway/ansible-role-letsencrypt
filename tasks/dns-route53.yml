@@ -30,3 +30,4 @@
       domain = le_domains | first | replace('*.', '')
       ) }}
   run_once: true
+  notify: Letsencrypt certificate issued
