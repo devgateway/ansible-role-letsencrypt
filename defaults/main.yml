@@ -17,5 +17,4 @@ le_enable_timer: true
 le_service_requires: []
 le_certbot_environment: {}
 le_plugin_settings:
-  webroot:
-    directory: /etc/letsencrypt/public_html
+  directory: /etc/letsencrypt/public_html

@@ -62,12 +62,11 @@ Default: ``` webroot ```
 
 ### `le_plugin_settings`
 
-A dictionary of configurations for each plugin.
+A dictionary of configurations for the plugin.
 
 Default:
 
-    webroot:
-      directory: /etc/letsencrypt/public_html
+    directory: /etc/letsencrypt/public_html
 
 
 ### `le_service_requires`

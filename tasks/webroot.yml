@@ -1,7 +1,7 @@
 ---
 - name: Create webroot directory
   file:
-    path: "{{ le_plugin_settings.webroot.directory }}"
+    path: "{{ le_plugin_settings.directory }}"
     state: directory
 
 - name: Initialize Letsencrypt certificate
@@ -13,7 +13,7 @@
     --staging
     {% endif %}
     --{{ le_plugin }}
-    --webroot-path {{ le_plugin_settings.webroot.directory | quote }}
+    --webroot-path {{ le_plugin_settings.directory | quote }}
     --domains {{ le_domains | join(',') | quote }}
   args:
     creates: >-

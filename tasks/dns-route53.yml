@@ -13,15 +13,15 @@
 
 - name: Configure AWS credentials
   ini_file:
-    path: "{{ hlws_letsencrypt_dir }}/aws.ini"
+    path: "{{ le_config_dir }}/aws.ini"
     create: true
     mode: 0600
     section: default
     option: "{{ item.key }}"
     value: "{{ item.value }}"
   with_dict:
-    aws_access_key_id: "{{ hlws_letsencrypt_plugin_settings[le_plugin].aws_access_key_id }}"
-    aws_secret_access_key: "{{ hlws_letsencrypt_plugin_settings[le_plugin].aws_secret_access_key }}"
+    aws_access_key_id: "{{ le_plugin_settings.aws_access_key_id }}"
+    aws_secret_access_key: "{{ le_plugin_settings.aws_secret_access_key }}"
   run_once: true
   no_log: true
   tags:
