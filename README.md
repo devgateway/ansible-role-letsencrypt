@@ -16,12 +16,6 @@ Contact email for certificate notices.
 
 ## Optional Variables
 
-### `le_certbot_environment`
-
-A dictionary of environment variables to pass to certbot.
-
-Default: ``` {} ```
-
 ### `le_config_dir`
 
 The directory where Letsencrypt stores configs and keys.
