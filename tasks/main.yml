@@ -45,21 +45,44 @@
 - name: Include plugin tasks
   include_tasks: "{{ le_plugin }}.yml"
 
-- name: Install Systemd units
-  template:
-    src: "{{ unit_type }}.j2"
-    dest: "{{ le_systemd_dir }}/{{ le_unit_name }}.{{ unit_type }}"
+- name: Configure Systemd service
+  ini_file:
+    dest: "{{ le_systemd_dir }}/{{ le_unit_name }}.service"
+    create: true
     mode: 0644
-  loop:
-    - service
-    - timer
+    no_extra_spaces: true
+    section: "{{ item.key.split('.')[0] }}"
+    option: "{{ item.key.split('.')[1] }}"
+    value: "{{ item.value }}"
+  with_dict:
+    Unit.Description: Update Letsencrypt certificates
+    Unit.Requires: "{{ (le_service_requires + ['network-online.target']) | join(' ') }}"
+    Service.Type: oneshot
+    Service.ExecStart: /usr/bin/certbot renew
   loop_control:
-    loop_var: unit_type
-  register: le_unit_status
+    label: "{{ item.key }}"
+  register: le_service_status
+
+- name: Configure Systemd timer
+  ini_file:
+    dest: "{{ le_systemd_dir }}/{{ le_unit_name }}.timer"
+    create: true
+    mode: 0644
+    no_extra_spaces: true
+    section: "{{ item.key.split('.')[0] }}"
+    option: "{{ item.key.split('.')[1] }}"
+    value: "{{ item.value }}"
+  with_dict:
+    Unit.Description: Trigger Letsencrypt updates
+    Timer.OnCalendar: "{{ le_update_interval }}"
+    Timer.Persistent: "true"
+  loop_control:
+    label: "{{ item.key }}"
+  register: le_timer_status
 
 - name: Reload Systemd daemon
   command: systemctl daemon-reload
-  when: le_unit_status.changed
+  when: le_timer_status.changed or le_service_status.changed
 
 - name: Enable and start Letsencrypt timer
   service:
