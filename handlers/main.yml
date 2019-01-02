@@ -1,3 +1,6 @@
 ---
 - name: Letsencrypt certificate issued
   meta: noop
+
+- name: Reload Systemd daemon
+  command: systemctl daemon-reload

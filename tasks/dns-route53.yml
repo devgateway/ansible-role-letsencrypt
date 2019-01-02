@@ -27,6 +27,17 @@
   tags:
     - letsencrypt
 
+- name: Configure Boto environment
+  ini_file:
+    dest: "{{ le_systemd_dir }}/{{ le_unit_name }}.service"
+    create: true
+    mode: 0644
+    no_extra_spaces: true
+    section: Service
+    option: Environment
+    value: AWS_CONFIG_FILE={{ le_config_dir }}/aws.ini
+  notify: Reload Systemd daemon
+
 - name: Initialize Letsencrypt certificate
   environment:
     AWS_CONFIG_FILE: "{{ le_config_dir }}/aws.ini"
